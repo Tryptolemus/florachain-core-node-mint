@@ -81,6 +81,21 @@
     .status.ok { border-color: var(--green); color: var(--green-bright); }
     .status.err { border-color: var(--danger); color: #ffb4b4; }
     .meta { margin-top: 1rem; font-size: 0.8rem; color: var(--muted); text-align: center; }
+
+    .nft-art-wrap {
+      margin: 0 auto 1.5rem; width: min(100%, 340px);
+      border-radius: 18px; overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 0 0 1px rgba(46,204,113,0.15), 0 18px 50px rgba(0,0,0,0.45);
+      animation: artPulse 2.5s ease-in-out infinite;
+    }
+    .nft-art-wrap img, .nft-art-wrap video {
+      display: block; width: 100%; height: auto; vertical-align: middle;
+    }
+    @keyframes artPulse {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(46,204,113,0.2), 0 18px 50px rgba(0,0,0,0.45), 0 0 24px rgba(46,204,113,0.15); filter: brightness(1); }
+      50% { box-shadow: 0 0 0 1px rgba(124,255,178,0.45), 0 22px 60px rgba(0,0,0,0.5), 0 0 36px rgba(46,204,113,0.35); filter: brightness(1.06); }
+    }
     code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.78rem; }
   </style>
 </head>
@@ -90,6 +105,10 @@
       <div class="badge">Ethereum · Public Sale · Soulbound</div>
       <h1>FloraChain Core Node</h1>
       <p class="sub">FCORE — founding node NFT for FloraChain / MetaFlora.<br/>Pay exactly <strong style="color:var(--green-bright)">399 USDC</strong> per node.<br/><strong style="color:var(--green-bright)">Soulbound — not transferable</strong> (no OpenSea / secondary sales).</p>
+
+      <div class="nft-art-wrap">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNDAgMzQwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImciIGN4PSI1MCUiIGN5PSI0NSUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiM3Y2ZmYjIiLz48c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzFmYWU2YSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA3MTQwZSIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIzNDAiIGhlaWdodD0iMzQwIiBmaWxsPSIjMDcxNDBlIi8+PGNpcmNsZSBjeD0iMTcwIiBjeT0iMTYwIiByPSI5MCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9IjE3MCIgY3k9IjE2MCIgcj0iNDAiIGZpbGw9IiMwNDE0MGMiIHN0cm9rZT0iIzdjZmZiMiIgc3Ryb2tlLXdpZHRoPSIzIi8+PHRleHQgeD0iMTcwIiB5PSIzMDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM3Y2ZmYjIiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4Ij5DT1JFIE5PREU8L3RleHQ+PC9zdmc+" alt="FloraChain Core Node NFT" />
+      </div>
       <div class="links">
         <a href="https://florachain.xyz" target="_blank" rel="noopener">florachain.xyz</a>
         <a href="https://metaflora.xyz" target="_blank" rel="noopener">metaflora.xyz</a>
