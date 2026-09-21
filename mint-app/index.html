@@ -1,100 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FloraChain — Core Node Sale</title>
-<link rel="icon" type="image/svg+xml" href="./favicon.svg">
-<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
-<style>
-:root{--bg:#050505;--lime:#ccff00;--muted:#8a8a8a;--text:#f2f2f2;--border:#1a1a1a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"Geist Sans",Geist,system-ui,sans-serif}
-a{color:inherit;text-decoration:none}.mono{font-family:ui-monospace,Menlo,monospace}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:rgba(5,5,5,.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50}
-.brand{display:flex;align-items:center;gap:.75rem}.brand-text{font-weight:600;font-size:1.125rem;color:#fff}.brand-muted{color:#6b7280}
-.brand:hover .brand-text,.brand:hover .brand-muted{color:var(--lime)}
-.logo-eclipse{position:relative;width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center}
-.logo-glow{position:absolute;inset:0;background:rgba(204,255,0,.4);filter:blur(12px);border-radius:999px}
-.logo-core{position:relative;width:2rem;height:2rem;background:#000;border-radius:999px;box-shadow:0 -3px 12px rgba(204,255,0,.6);overflow:hidden;z-index:10}
-.logo-rim{position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:1.5rem;height:4px;background:#ccff00;filter:blur(2px);border-radius:999px;box-shadow:0 0 10px #ccff00;z-index:20}
-.logo-rim-sharp{position:absolute;inset:0;border-radius:999px;border-top:1.5px solid #ccff00}
-.logo-inner{position:absolute;top:0;left:50%;transform:translateX(-50%);width:1.25rem;height:1.25rem;background:radial-gradient(circle at top,#ccff00 0%,transparent 70%);opacity:.3}
-.pill{background:var(--lime);color:#000;padding:.55rem .95rem;border-radius:999px;font-weight:600;font-size:.85rem;text-decoration:none}
-.hero{max-width:1120px;margin:auto;padding:3.5rem 1.5rem;display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center}
-@media(max-width:900px){.hero{grid-template-columns:1fr}}
-h1{font-size:clamp(2.4rem,5vw,3.6rem);margin:0 0 1rem;line-height:1.05;font-weight:600}em{font-style:normal;color:var(--lime)}
-.lede{color:var(--muted);line-height:1.6}.eyebrow{color:var(--lime);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:1rem}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:1.5rem}
-.stat{border:1px solid var(--border);background:#0a0a0a;border-radius:14px;padding:.9rem 1rem}.stat b{display:block;color:var(--lime)}.stat span{color:var(--muted);font-size:.78rem}
-.panel{border:1px solid #1f1f1f;background:#080808;border-radius:20px;padding:1.25rem;box-shadow:0 0 0 1px rgba(204,255,0,.06)}
-.art-wrap{border-radius:16px;overflow:hidden;border:1px solid #222;background:#000;margin-bottom:1rem}
-.art-wrap img{display:block;width:100%;height:auto}
-.price{color:var(--lime);font-size:1.8rem;font-weight:700;margin:.25rem 0 1rem}
-button{width:100%;border:0;border-radius:12px;padding:1rem;font:inherit;font-weight:600;cursor:pointer;margin-top:.4rem}
-button.primary{background:var(--lime);color:#000}button.primary:disabled{opacity:.45;cursor:not-allowed}
-button.ghost{background:transparent;color:var(--text);border:1px solid #2a2a2a;margin-bottom:.75rem}
-.status{margin-top:.9rem;padding:.85rem;border-radius:12px;border:1px solid #1f1f1f;color:var(--muted);font-size:.85rem;min-height:2.5rem;white-space:pre-wrap}
-.status.ok{border-color:rgba(204,255,0,.45);color:#b6ff2e}.status.err{border-color:rgba(255,92,92,.5);color:#ffb0b0}
-.meta{margin-top:.85rem;text-align:center;color:var(--muted);font-size:.75rem}
-.strip{max-width:1120px;margin:0 auto;padding:0 1.5rem 3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}
-@media(max-width:900px){.strip{grid-template-columns:1fr 1fr}}
-.strip .item{border:1px solid var(--border);border-radius:14px;padding:1rem;background:#0a0a0a}
-.strip h3{margin:0 0 .35rem;color:var(--lime);font-size:.95rem}.strip p{margin:0;color:var(--muted);font-size:.82rem}
-label{display:block;color:var(--muted);font-size:.8rem;margin-bottom:.35rem}
-input[type=number]{width:100%;padding:.85rem 1rem;border-radius:12px;border:1px solid #222;background:#050505;color:var(--text);font:inherit;margin-bottom:.75rem}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FloraChain — Core Node Sale</title>
+  <meta name="description" content="Mint a soulbound FloraChain Core Node (FCORE) for 399 USDC on Ethereum." />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #050505;
+      --bg2: #0a0a0a;
+      --panel: #080808;
+      --border: #1a1a1a;
+      --lime: #ccff00;
+      --lime2: #b6ff2e;
+      --text: #f2f2f2;
+      --muted: #8a8a8a;
+      --danger: #ff5c5c;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text);
+      font-family: "Geist Sans", Geist, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .mono { font-family: "Geist Mono", ui-monospace, Menlo, monospace; }
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+      background: rgba(5,5,5,0.85); backdrop-filter: blur(12px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .brand-text { font-weight: 600; font-size: 1.125rem; letter-spacing: -0.02em; color: #fff; }
+    .brand:hover .brand-text { color: #ccff00; }
+    .brand-muted { color: #6b7280; }
+    .brand:hover .brand-muted { color: #ccff00; }
+    .logo-eclipse { position: relative; width: 2.25rem; height: 2.25rem; display: flex; align-items: center; justify-content: center; }
+    .logo-glow { position: absolute; inset: 0; background: rgba(204,255,0,0.4); filter: blur(12px); border-radius: 999px; }
+    .logo-core { position: relative; width: 2rem; height: 2rem; background: #000; border-radius: 999px; box-shadow: 0 -3px 12px rgba(204,255,0,0.6); z-index: 10; overflow: hidden; }
+    .logo-rim { position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 1.5rem; height: 4px; background: #ccff00; filter: blur(2px); border-radius: 999px; box-shadow: 0 0 10px #ccff00; z-index: 20; }
+    .logo-rim-sharp { position: absolute; inset: 0; border-radius: 999px; border-top: 1.5px solid #ccff00; }
+    .logo-inner { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 1.25rem; height: 1.25rem; background: radial-gradient(circle at top, #ccff00 0%, transparent 70%); opacity: 0.3; filter: blur(1px); }
+    .nav-links { display: flex; gap: 1.25rem; align-items: center; color: var(--muted); font-size: 0.9rem; }
+    .nav-links a:hover { color: var(--text); }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.55rem 0.95rem; border-radius: 999px;
+      background: var(--lime); color: #000; font-weight: 600; font-size: 0.85rem;
+    }
+    .pill:hover { filter: brightness(1.05); }
+    .hero {
+      max-width: 1120px; margin: 0 auto; padding: 3.5rem 1.5rem 2rem;
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2.5rem; align-items: center;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 2rem; }
+      .nav-links .hide-sm { display: none; }
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--lime); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 12px var(--lime); }
+    h1 {
+      margin: 0 0 1rem; font-size: clamp(2.4rem, 5vw, 3.6rem); line-height: 1.05;
+      letter-spacing: -0.03em; font-weight: 600;
+    }
+    h1 em { font-style: normal; color: var(--lime); }
+    .lede { color: var(--muted); font-size: 1.05rem; line-height: 1.6; max-width: 36rem; margin: 0 0 1.5rem; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0.75rem; margin-top: 1.75rem;
+    }
+    .stat {
+      border: 1px solid var(--border); background: var(--bg2); border-radius: 14px; padding: 0.9rem 1rem;
+    }
+    .stat b { display: block; color: var(--lime); font-size: 1.05rem; margin-bottom: 0.2rem; }
+    .stat span { color: var(--muted); font-size: 0.78rem; }
+    .panel {
+      border: 1px solid #1f1f1f; background: linear-gradient(180deg, #0c0c0c, #070707);
+      border-radius: 20px; padding: 1.25rem; box-shadow: 0 0 0 1px rgba(204,255,0,0.06), 0 30px 80px rgba(0,0,0,0.55);
+    }
+    .art-wrap {
+      border-radius: 16px; overflow: hidden; border: 1px solid #222;
+      margin-bottom: 1rem; background: #000;
+      animation: glow 2.8s ease-in-out infinite;
+    }
+    .art-wrap img { display: block; width: 100%; height: auto; }
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 0 1px rgba(204,255,0,0.12), 0 0 24px rgba(204,255,0,0.08); }
+      50% { box-shadow: 0 0 0 1px rgba(204,255,0,0.35), 0 0 40px rgba(204,255,0,0.18); }
+    }
+    .price-row {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border);
+    }
+    .price-row strong { font-size: 1.8rem; color: var(--lime); letter-spacing: -0.02em; }
+    .price-row span { color: var(--muted); font-size: 0.8rem; text-align: right; }
+    label { display: block; color: var(--muted); font-size: 0.8rem; margin-bottom: 0.4rem; }
+    input[type="number"] {
+      width: 100%; padding: 0.85rem 1rem; border-radius: 12px; margin-bottom: 0.85rem;
+      border: 1px solid #222; background: #050505; color: var(--text); font-size: 1rem;
+      font-family: inherit;
+    }
+    input[type="number"]:focus { outline: none; border-color: rgba(204,255,0,0.5); }
+    button {
+      width: 100%; border: none; border-radius: 12px; padding: 0.95rem 1rem;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: inherit;
+      transition: 0.15s ease;
+    }
+    button.primary { background: var(--lime); color: #000; margin-top: 0.4rem; }
+    button.primary:hover:not(:disabled) { filter: brightness(1.06); }
+    button.primary:disabled { opacity: 0.45; cursor: not-allowed; }
+    button.ghost {
+      background: transparent; color: var(--text); border: 1px solid #2a2a2a; margin-bottom: 0.75rem;
+    }
+    button.ghost:hover { border-color: var(--lime); color: var(--lime); }
+    .status {
+      margin-top: 0.9rem; padding: 0.85rem 1rem; border-radius: 12px;
+      background: #050505; border: 1px solid #1f1f1f; color: var(--muted);
+      font-size: 0.85rem; line-height: 1.45; white-space: pre-wrap; word-break: break-word; min-height: 3rem;
+    }
+    .status.ok { border-color: rgba(204,255,0,0.45); color: var(--lime2); }
+    .status.err { border-color: rgba(255,92,92,0.5); color: #ffb0b0; }
+    .meta { margin-top: 0.85rem; text-align: center; color: var(--muted); font-size: 0.75rem; }
+    .meta code { color: #cfcfcf; }
+    .strip {
+      max-width: 1120px; margin: 0 auto; padding: 0 1.5rem 3rem;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;
+    }
+    @media (max-width: 900px) { .strip { grid-template-columns: 1fr 1fr; } }
+    .strip .item {
+      border: 1px solid var(--border); border-radius: 14px; padding: 1rem;
+      background: var(--bg2); min-height: 110px;
+    }
+    .strip h3 { margin: 0 0 0.35rem; font-size: 0.95rem; color: var(--lime); font-weight: 600; }
+    .strip p { margin: 0; color: var(--muted); font-size: 0.82rem; line-height: 1.45; }
+    .footer {
+      border-top: 1px solid var(--border); padding: 1.5rem; color: var(--muted);
+      display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+      max-width: 1120px; margin: 0 auto; font-size: 0.85rem;
+    }
+    .footer a:hover { color: var(--lime); }
+  </style>
 </head>
 <body>
-<header class="nav">
-<a class="brand" href="https://www.florachain.xyz" target="_blank" rel="noopener">
-<div class="logo-eclipse" aria-hidden="true"><div class="logo-glow"></div><div class="logo-core"><div class="logo-rim"></div><div class="logo-rim-sharp"></div><div class="logo-inner"></div></div></div>
-<span class="brand-text">FLORA<span class="brand-muted">CHAIN</span></span></a>
-<a class="pill" href="#mint">Mint Core Node</a>
-</header>
-<main class="hero">
-<section>
-<p class="eyebrow">Licensed Core Nodes · Public Sale</p>
-<h1>Run the core.<br>Own a <em>FloraChain</em> node.</h1>
-<p class="lede">Mint a soulbound FloraChain Core Node (FCORE) on Ethereum for exactly <strong style="color:var(--text)">399 USDC</strong>. Not transferable on secondary markets — SEED-ready once tech whitelists the contract.</p>
-<div class="stats">
-<div class="stat"><b>$399</b><span>USDC per node</span></div>
-<div class="stat"><b>Soulbound</b><span>No secondary sales</span></div>
-<div class="stat"><b>2,500</b><span>Max supply</span></div>
-</div>
-</section>
-<section class="panel" id="mint">
-<div class="art-wrap"><img id="nftArt" alt="FloraChain Core Node NFT" src="./fcore.jpg"></div>
-<div style="color:var(--muted);font-size:.75rem">UNIT PRICE</div>
-<div class="price">399 USDC</div>
-<button class="ghost" id="connectBtn" type="button">Connect wallet</button>
-<label for="qty">Quantity</label>
-<input id="qty" type="number" min="1" max="10" value="1">
-<button class="primary" id="approveBtn" type="button" disabled>1. Approve USDC</button>
-<button class="primary" id="mintBtn" type="button" disabled>2. Mint Core Node</button>
-<div class="status" id="status">Connect a wallet on Ethereum to mint. Contract address is set after deploy.</div>
-<p class="meta mono">Contract: <code id="addrLabel">not configured</code> · Network: <span id="netLabel">—</span></p>
-</section>
-</main>
-<section class="strip">
-<div class="item"><h3>Decentralized</h3><p>Distributed node network securing FloraChain participation.</p></div>
-<div class="item"><h3>Compliant</h3><p>Built for real-world rails — identity-aware infrastructure.</p></div>
-<div class="item"><h3>Sovereign</h3><p>Your node license stays with you. Soulbound by design.</p></div>
-<div class="item"><h3>SEED-ready</h3><p>Pass the contract address to tech for SEED recognition.</p></div>
-</section>
-<script>
-const CONFIG={chainId:1,contractAddress:"",usdcAddress:"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",priceUsdc:399_000_000n};
-const NFT_ABI=["function mint(uint256 qty)","function saleActive() view returns (bool)","event Minted(address indexed minter, uint256 indexed startTokenId, uint256 quantity, bool paidInUsdc)"];
-const ERC20_ABI=["function approve(address spender, uint256 amount) returns (bool)"];
-let provider,signer,account;
-const $=id=>document.getElementById(id);
-function setStatus(msg,kind){$("status").textContent=msg;$("status").className="status"+(kind?" "+kind:"");}
-function requireConfig(){if(!CONFIG.contractAddress||!CONFIG.contractAddress.startsWith("0x"))throw new Error("Set CONFIG.contractAddress after deploy.");}
-async function loadArt(){const img=$("nftArt");try{const r=await fetch("./fcore.jpg.b64",{cache:"no-store"});const raw=(await r.text()).trim();if(!raw.startsWith("/9j/"))throw 0;img.src="data:image/jpeg;base64,"+raw;}catch(e){img.src="./fcore.jpg";}}
-async function connect(){if(!window.ethereum){setStatus("No wallet found. Install MetaMask.","err");return;}try{provider=new ethers.BrowserProvider(window.ethereum);await provider.send("eth_requestAccounts",[]);signer=await provider.getSigner();account=await signer.getAddress();const net=await provider.getNetwork();$("netLabel").textContent=net.name+" ("+net.chainId+")";$("addrLabel").textContent=CONFIG.contractAddress||"(set after deploy)";$("connectBtn").textContent=account.slice(0,6)+"…"+account.slice(-4);$("approveBtn").disabled=false;$("mintBtn").disabled=false;setStatus("Connected. Approve USDC, then mint.","ok");}catch(e){setStatus(e.message||String(e),"err");}}
-async function approveUsdc(){try{requireConfig();const qty=BigInt($("qty").value||"1");const usdc=new ethers.Contract(CONFIG.usdcAddress,ERC20_ABI,signer);setStatus("Confirm USDC approve…");const tx=await usdc.approve(CONFIG.contractAddress,CONFIG.priceUsdc*qty);await tx.wait();setStatus("USDC approved. You can mint now.","ok");}catch(e){setStatus(e.shortMessage||e.message||String(e),"err");}}
-async function mint(){try{requireConfig();const qty=BigInt($("qty").value||"1");const nft=new ethers.Contract(CONFIG.contractAddress,NFT_ABI,signer);if(!(await nft.saleActive()))throw new Error("Sale is not active yet.");setStatus("Confirm mint…");const tx=await nft.mint(qty);await tx.wait();setStatus("Success! Tx: "+tx.hash,"ok");}catch(e){setStatus(e.shortMessage||e.message||String(e),"err");}}
-loadArt();$("connectBtn").onclick=connect;$("approveBtn").onclick=approveUsdc;$("mintBtn").onclick=mint;
-</script>
+  <header class="nav">
+    <a class="brand" href="https://www.florachain.xyz" target="_blank" rel="noopener">
+      <div class="logo-eclipse" aria-hidden="true">
+        <div class="logo-glow"></div>
+        <div class="logo-core">
+          <div class="logo-rim"></div>
+          <div class="logo-rim-sharp"></div>
+          <div class="logo-inner"></div>
+        </div>
+      </div>
+      <span class="brand-text">FLORA<span class="brand-muted">CHAIN</span></span>
+    </a>
+    <div class="nav-links">
+      <a class="hide-sm" href="https://www.florachain.xyz" target="_blank" rel="noopener">Network</a>
+      <a class="hide-sm" href="https://metaflora.xyz" target="_blank" rel="noopener">MetaFlora</a>
+      <a class="pill" href="#mint">Mint Core Node</a>
+    </div>
+  </header>
+
+  <main class="hero">
+    <section>
+      <div class="eyebrow"><span class="dot"></span> Licensed Core Nodes · Public Sale</div>
+      <h1>Run the core.<br/>Own a <em>FloraChain</em> node.</h1>
+      <p class="lede">
+        Mint a soulbound FloraChain Core Node (FCORE) on Ethereum for exactly
+        <strong style="color:var(--text)">399 USDC</strong>.
+        Your license stays in your wallet — not transferable on secondary markets —
+        and can be recognized for SEED once your tech team whitelists the contract.
+      </p>
+      <div class="stats">
+        <div class="stat"><b>$399</b><span>USDC per node</span></div>
+        <div class="stat"><b>Soulbound</b><span>No secondary sales</span></div>
+        <div class="stat"><b>2,500</b><span>Max supply</span></div>
+      </div>
+    </section>
+
+    <section class="panel" id="mint">
+      <div class="art-wrap">
+        <img id="nftArt" alt="FloraChain Core Node NFT" src="" />
+      </div>
+      <div class="price-row">
+        <div>
+          <div style="color:var(--muted);font-size:0.75rem;margin-bottom:0.25rem">UNIT PRICE</div>
+          <strong>399 USDC</strong>
+        </div>
+        <span class="mono">Max 10 / wallet<br/>Ethereum mainnet</span>
+      </div>
+
+      <button class="ghost" id="connectBtn" type="button">Connect wallet</button>
+      <label for="qty">Quantity</label>
+      <input id="qty" type="number" min="1" max="10" value="1" />
+      <button class="primary" id="approveBtn" type="button" disabled>1. Approve USDC</button>
+      <button class="primary" id="mintBtn" type="button" disabled>2. Mint Core Node</button>
+      <div class="status" id="status">Connect a wallet on Ethereum to mint. Contract address is set after deploy.</div>
+      <p class="meta mono">
+        Contract: <code id="addrLabel">not configured</code><br/>
+        Network: <span id="netLabel">—</span>
+      </p>
+    </section>
+  </main>
+
+  <section class="strip">
+    <div class="item"><h3>Decentralized</h3><p>Distributed node network securing FloraChain participation.</p></div>
+    <div class="item"><h3>Compliant</h3><p>Built for real-world rails — identity-aware infrastructure.</p></div>
+    <div class="item"><h3>Sovereign</h3><p>Your node license stays with you. Soulbound by design.</p></div>
+    <div class="item"><h3>SEED-ready</h3><p>Pass the contract address to tech for SEED recognition.</p></div>
+  </section>
+
+  <footer class="footer">
+    <div>© FloraChain · Powered by VEKTR</div>
+    <div style="display:flex;gap:1rem">
+      <a href="https://www.florachain.xyz" target="_blank" rel="noopener">florachain.xyz</a>
+      <a href="https://metaflora.xyz" target="_blank" rel="noopener">metaflora.xyz</a>
+      <a href="https://github.com/Tryptolemus/florachain-core-node-mint" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <script>
+    const CONFIG = {
+      chainId: 1,
+      contractAddress: "",
+      usdcAddress: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      priceUsdc: 399_000_000n,
+    };
+    const NFT_ABI = [
+      "function mint(uint256 qty)",
+      "function saleActive() view returns (bool)",
+      "function maxPerWallet() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function maxSupply() view returns (uint256)",
+      "function balanceOf(address) view returns (uint256)",
+      "event Minted(address indexed minter, uint256 indexed startTokenId, uint256 quantity, bool paidInUsdc)"
+    ];
+    const ERC20_ABI = [
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function balanceOf(address) view returns (uint256)",
+      "function decimals() view returns (uint8)"
+    ];
+    let provider, signer, account;
+    const $ = (id) => document.getElementById(id);
+    const statusEl = $("status");
+    const connectBtn = $("connectBtn");
+    const approveBtn = $("approveBtn");
+    const mintBtn = $("mintBtn");
+    function setStatus(msg, kind) {
+      statusEl.textContent = msg;
+      statusEl.className = "status" + (kind ? " " + kind : "");
+    }
+    function requireConfig() {
+      if (!CONFIG.contractAddress || !CONFIG.contractAddress.startsWith("0x")) {
+        throw new Error("Set CONFIG.contractAddress after deploy.");
+      }
+    }
+    async function loadArt() {
+      const img = $("nftArt");
+      try {
+        const parts = await Promise.all([1,2,3].map(async (n) => {
+          const r = await fetch("./fcore.jpg.b64.part" + n, { cache: "no-store" });
+          if (!r.ok) throw new Error("part " + n);
+          return (await r.text()).trim();
+        }));
+        const raw = parts.join("");
+        if (!raw.startsWith("/9j/")) throw new Error("bad art");
+        img.src = "data:image/jpeg;base64," + raw;
+        img.style.padding = "";
+        img.style.background = "";
+      } catch (e) {
+        console.warn(e);
+        img.alt = "Core Node art";
+      }
+    }
+    async function ensureChain() {
+      const hex = "0x" + CONFIG.chainId.toString(16);
+      try {
+        await provider.send("wallet_switchEthereumChain", [{ chainId: hex }]);
+      } catch (e) {
+        if (e.code === 4902 && CONFIG.chainId === 11155111) {
+          await provider.send("wallet_addEthereumChain", [{
+            chainId: hex,
+            chainName: "Sepolia",
+            nativeCurrency: { name: "SepoliaETH", symbol: "ETH", decimals: 18 },
+            rpcUrls: ["https://rpc.sepolia.org"],
+            blockExplorerUrls: ["https://sepolia.etherscan.io"]
+          }]);
+        } else { throw e; }
+      }
+    }
+    async function connect() {
+      if (!window.ethereum) {
+        setStatus("No wallet found. Install MetaMask or another EIP-1193 wallet.", "err");
+        return;
+      }
+      try {
+        provider = new ethers.BrowserProvider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        await ensureChain();
+        signer = await provider.getSigner();
+        account = await signer.getAddress();
+        const net = await provider.getNetwork();
+        $("netLabel").textContent = net.name + " (" + net.chainId + ")";
+        $("addrLabel").textContent = CONFIG.contractAddress || "(set after deploy)";
+        connectBtn.textContent = account.slice(0, 6) + "…" + account.slice(-4);
+        approveBtn.disabled = false;
+        mintBtn.disabled = false;
+        setStatus("Connected. Approve USDC, then mint your Core Node.", "ok");
+      } catch (e) {
+        setStatus(e.message || String(e), "err");
+      }
+    }
+    async function approveUsdc() {
+      try {
+        requireConfig();
+        const qty = BigInt($("qty").value || "1");
+        if (qty < 1n || qty > 10n) throw new Error("Quantity must be 1–10.");
+        const usdc = new ethers.Contract(CONFIG.usdcAddress, ERC20_ABI, signer);
+        const amount = CONFIG.priceUsdc * qty;
+        setStatus("Confirm USDC approve in your wallet…");
+        const tx = await usdc.approve(CONFIG.contractAddress, amount);
+        setStatus("Approve submitted: " + tx.hash + "\nWaiting…");
+        await tx.wait();
+        setStatus("USDC approved for " + qty.toString() + " node(s). You can mint now.", "ok");
+      } catch (e) {
+        setStatus(e.shortMessage || e.message || String(e), "err");
+      }
+    }
+    async function mint() {
+      try {
+        requireConfig();
+        const qty = BigInt($("qty").value || "1");
+        if (qty < 1n || qty > 10n) throw new Error("Quantity must be 1–10.");
+        const nft = new ethers.Contract(CONFIG.contractAddress, NFT_ABI, signer);
+        const active = await nft.saleActive();
+        if (!active) throw new Error("Sale is not active yet.");
+        setStatus("Confirm mint in your wallet…");
+        const tx = await nft.mint(qty);
+        setStatus("Mint submitted: " + tx.hash + "\nWaiting for confirmation…");
+        const receipt = await tx.wait();
+        let ids = [];
+        for (const log of receipt.logs) {
+          try {
+            const parsed = nft.interface.parseLog(log);
+            if (parsed && parsed.name === "Minted") {
+              const start = parsed.args.startTokenId;
+              const q = parsed.args.quantity;
+              for (let i = 0n; i < q; i++) ids.push((start + i).toString());
+            }
+          } catch (_) {}
+        }
+        setStatus(
+          "Success! Minted token id(s): " + (ids.length ? ids.join(", ") : "(see explorer)") +
+          "\nTx: " + tx.hash,
+          "ok"
+        );
+      } catch (e) {
+        setStatus(e.shortMessage || e.message || String(e), "err");
+      }
+    }
+    loadArt();
+    connectBtn.addEventListener("click", connect);
+    approveBtn.addEventListener("click", approveUsdc);
+    mintBtn.addEventListener("click", mint);
+    $("addrLabel").textContent = CONFIG.contractAddress || "not configured";
+  </script>
 </body>
 </html>
