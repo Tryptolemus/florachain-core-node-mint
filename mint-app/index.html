@@ -57,7 +57,12 @@
     .pill:hover { filter: brightness(1.05); }
     .hero {
       max-width: 1120px; margin: 0 auto; padding: 3.5rem 1.5rem 2rem;
-      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2.5rem; align-items: center;
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2.5rem; align-items: start;
+    }
+    .hero-copy { padding-top: 0.35rem; }
+    .art-wrap video, .art-wrap img {
+      display: block; width: 100%; height: auto;
+      image-rendering: -webkit-optimize-contrast;
     }
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; padding-top: 2rem; }
@@ -92,7 +97,6 @@
       margin-bottom: 1rem; background: #000;
       animation: glow 2.8s ease-in-out infinite;
     }
-    .art-wrap img { display: block; width: 100%; height: auto; }
     @keyframes glow {
       0%,100% { box-shadow: 0 0 0 1px rgba(204,255,0,0.12), 0 0 24px rgba(204,255,0,0.08); }
       50% { box-shadow: 0 0 0 1px rgba(204,255,0,0.35), 0 0 40px rgba(204,255,0,0.18); }
@@ -171,7 +175,7 @@
   </header>
 
   <main class="hero">
-    <section>
+    <section class="hero-copy">
       <div class="eyebrow"><span class="dot"></span> Licensed Core Nodes · Public Sale</div>
       <h1>Run the core.<br/>Own a <em>FloraChain</em> node.</h1>
       <p class="lede">
@@ -189,7 +193,7 @@
 
     <section class="panel" id="mint">
       <div class="art-wrap">
-        <img id="nftArt" alt="FloraChain Core Node NFT" src="" />
+        <video id="nftArt" autoplay muted loop playsinline preload="auto" poster="" aria-label="FloraChain Core Node NFT"></video>
       </div>
       <div class="price-row">
         <div>
@@ -228,152 +232,6 @@
     </div>
   </footer>
 
-  <script>
-    const CONFIG = {
-      chainId: 1,
-      contractAddress: "",
-      usdcAddress: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-      priceUsdc: 399_000_000n,
-    };
-    const NFT_ABI = [
-      "function mint(uint256 qty)",
-      "function saleActive() view returns (bool)",
-      "function maxPerWallet() view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function maxSupply() view returns (uint256)",
-      "function balanceOf(address) view returns (uint256)",
-      "event Minted(address indexed minter, uint256 indexed startTokenId, uint256 quantity, bool paidInUsdc)"
-    ];
-    const ERC20_ABI = [
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function balanceOf(address) view returns (uint256)",
-      "function decimals() view returns (uint8)"
-    ];
-    let provider, signer, account;
-    const $ = (id) => document.getElementById(id);
-    const statusEl = $("status");
-    const connectBtn = $("connectBtn");
-    const approveBtn = $("approveBtn");
-    const mintBtn = $("mintBtn");
-    function setStatus(msg, kind) {
-      statusEl.textContent = msg;
-      statusEl.className = "status" + (kind ? " " + kind : "");
-    }
-    function requireConfig() {
-      if (!CONFIG.contractAddress || !CONFIG.contractAddress.startsWith("0x")) {
-        throw new Error("Set CONFIG.contractAddress after deploy.");
-      }
-    }
-    async function loadArt() {
-      const img = $("nftArt");
-      try {
-        const parts = await Promise.all([1,2,3].map(async (n) => {
-          const r = await fetch("./fcore.jpg.b64.part" + n, { cache: "no-store" });
-          if (!r.ok) throw new Error("part " + n);
-          return (await r.text()).trim();
-        }));
-        const raw = parts.join("");
-        if (!raw.startsWith("/9j/")) throw new Error("bad art");
-        img.src = "data:image/jpeg;base64," + raw;
-        img.style.padding = "";
-        img.style.background = "";
-      } catch (e) {
-        console.warn(e);
-        img.alt = "Core Node art";
-      }
-    }
-    async function ensureChain() {
-      const hex = "0x" + CONFIG.chainId.toString(16);
-      try {
-        await provider.send("wallet_switchEthereumChain", [{ chainId: hex }]);
-      } catch (e) {
-        if (e.code === 4902 && CONFIG.chainId === 11155111) {
-          await provider.send("wallet_addEthereumChain", [{
-            chainId: hex,
-            chainName: "Sepolia",
-            nativeCurrency: { name: "SepoliaETH", symbol: "ETH", decimals: 18 },
-            rpcUrls: ["https://rpc.sepolia.org"],
-            blockExplorerUrls: ["https://sepolia.etherscan.io"]
-          }]);
-        } else { throw e; }
-      }
-    }
-    async function connect() {
-      if (!window.ethereum) {
-        setStatus("No wallet found. Install MetaMask or another EIP-1193 wallet.", "err");
-        return;
-      }
-      try {
-        provider = new ethers.BrowserProvider(window.ethereum);
-        await provider.send("eth_requestAccounts", []);
-        await ensureChain();
-        signer = await provider.getSigner();
-        account = await signer.getAddress();
-        const net = await provider.getNetwork();
-        $("netLabel").textContent = net.name + " (" + net.chainId + ")";
-        $("addrLabel").textContent = CONFIG.contractAddress || "(set after deploy)";
-        connectBtn.textContent = account.slice(0, 6) + "…" + account.slice(-4);
-        approveBtn.disabled = false;
-        mintBtn.disabled = false;
-        setStatus("Connected. Approve USDC, then mint your Core Node.", "ok");
-      } catch (e) {
-        setStatus(e.message || String(e), "err");
-      }
-    }
-    async function approveUsdc() {
-      try {
-        requireConfig();
-        const qty = BigInt($("qty").value || "1");
-        if (qty < 1n || qty > 10n) throw new Error("Quantity must be 1–10.");
-        const usdc = new ethers.Contract(CONFIG.usdcAddress, ERC20_ABI, signer);
-        const amount = CONFIG.priceUsdc * qty;
-        setStatus("Confirm USDC approve in your wallet…");
-        const tx = await usdc.approve(CONFIG.contractAddress, amount);
-        setStatus("Approve submitted: " + tx.hash + "\nWaiting…");
-        await tx.wait();
-        setStatus("USDC approved for " + qty.toString() + " node(s). You can mint now.", "ok");
-      } catch (e) {
-        setStatus(e.shortMessage || e.message || String(e), "err");
-      }
-    }
-    async function mint() {
-      try {
-        requireConfig();
-        const qty = BigInt($("qty").value || "1");
-        if (qty < 1n || qty > 10n) throw new Error("Quantity must be 1–10.");
-        const nft = new ethers.Contract(CONFIG.contractAddress, NFT_ABI, signer);
-        const active = await nft.saleActive();
-        if (!active) throw new Error("Sale is not active yet.");
-        setStatus("Confirm mint in your wallet…");
-        const tx = await nft.mint(qty);
-        setStatus("Mint submitted: " + tx.hash + "\nWaiting for confirmation…");
-        const receipt = await tx.wait();
-        let ids = [];
-        for (const log of receipt.logs) {
-          try {
-            const parsed = nft.interface.parseLog(log);
-            if (parsed && parsed.name === "Minted") {
-              const start = parsed.args.startTokenId;
-              const q = parsed.args.quantity;
-              for (let i = 0n; i < q; i++) ids.push((start + i).toString());
-            }
-          } catch (_) {}
-        }
-        setStatus(
-          "Success! Minted token id(s): " + (ids.length ? ids.join(", ") : "(see explorer)") +
-          "\nTx: " + tx.hash,
-          "ok"
-        );
-      } catch (e) {
-        setStatus(e.shortMessage || e.message || String(e), "err");
-      }
-    }
-    loadArt();
-    connectBtn.addEventListener("click", connect);
-    approveBtn.addEventListener("click", approveUsdc);
-    mintBtn.addEventListener("click", mint);
-    $("addrLabel").textContent = CONFIG.contractAddress || "not configured";
-  </script>
+  <script src="./mint.js"></script>
 </body>
 </html>
