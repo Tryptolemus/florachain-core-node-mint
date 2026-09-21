@@ -1,0 +1,14 @@
+{
+  "name": "FloraChain Core Node #1",
+  "description": "FloraChain Core Node (FCORE) — a founding SOULBOUND node NFT for the FloraChain / MetaFlora ecosystem. Non-transferable on secondary markets (EIP-5192). Holders are recognized for SEED rewards by the MetaFlora tech team after contract handoff.",
+  "image": "ipfs://REPLACE_WITH_CID/fcore.svg",
+  "external_url": "https://florachain.xyz",
+  "attributes": [
+    { "trait_type": "Collection", "value": "FloraChain Core Node" },
+    { "trait_type": "Symbol", "value": "FCORE" },
+    { "trait_type": "Tier", "value": "Core" },
+    { "trait_type": "Network", "value": "Ethereum" },
+    { "trait_type": "Price USDC", "value": "399" },
+    { "trait_type": "Soulbound", "value": "Yes (EIP-5192)" }
+  ]
+}
