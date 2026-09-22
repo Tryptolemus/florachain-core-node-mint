@@ -1,8 +1,18 @@
-# Tech team handoff — FloraChain Core Node → SEED recognition
+# Tech team handoff — FloraChain Agentic AI Node → SEED recognition
 
-**Product:** FloraChain Core Node NFT (`FCORE`) on Ethereum  
+**Product:** FloraChain Core Node NFT (`FCORE`) on Ethereum — the **agentic & AI** license  
 **Owner:** Greg / MetaFlora  
 **Purpose:** Recognize holders for **SEED** rewards after the public mint contract is live.
+
+## Role (do not mix with other node products)
+
+| Product | Role |
+|---------|------|
+| MetaFlora Connoisseur (and other MetaFlora node SKUs) | **Peer node** — a copy of flora-1 |
+| FloraChain validators | **Staking / signing** |
+| **FCORE (this contract)** | **Agentic + AI power** only — Manifest rails and AI completion-pool work |
+
+SEED gating for FCORE must stay on this contract address. Do not treat Connoisseur holders as FCORE workers or FCORE holders as validators.
 
 This checklist is for the team that wires holder detection into MetaFlora / FloraChain SEED systems. No private keys are shared here.
 
@@ -93,6 +103,7 @@ Index from deploy block. Treat transfers as ownership changes for SEED eligibili
 - [ ] Staging test with Sepolia address first (if used), then promote mainnet address
 - [ ] Document admin who can update the recognized contract address
 - [ ] Notify ops when indexing is live; Greg can open `saleActive`
+- [ ] Index FCORE as **agentic/AI worker license**, not as peer or validator eligibility
 
 ## 5. Security / ops notes for tech
 

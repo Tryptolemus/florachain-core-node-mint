@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FloraChain — Core Node Sale</title>
-  <meta name="description" content="Mint a soulbound FloraChain Core Node (FCORE) for 399 USDC on Ethereum." />
+  <title>FloraChain — Agentic AI Node</title>
+  <meta name="description" content="Mint a soulbound FloraChain Agentic AI Node (FCORE) for 399 USDC. Powers agentics and AI on FloraChain — not a peer replica, not a validator." />
   <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.min.css" rel="stylesheet" />
@@ -35,7 +35,6 @@
       padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
       background: rgba(5,5,5,0.85); backdrop-filter: blur(12px);
     }
-
     .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
     .brand-text { font-weight: 600; font-size: 1.125rem; letter-spacing: -0.02em; color: #fff; }
     .brand:hover .brand-text { color: #ccff00; }
@@ -170,30 +169,32 @@
     <div class="nav-links">
       <a class="hide-sm" href="https://www.florachain.xyz" target="_blank" rel="noopener">Network</a>
       <a class="hide-sm" href="https://metaflora.xyz" target="_blank" rel="noopener">MetaFlora</a>
-      <a class="pill" href="#mint">Mint Core Node</a>
+      <a class="pill" href="#mint">Mint AI Node</a>
     </div>
   </header>
 
   <main class="hero">
     <section class="hero-copy">
-      <div class="eyebrow"><span class="dot"></span> Licensed Core Nodes · Public Sale</div>
-      <h1>Run the core.<br/>Own a <em>FloraChain</em> node.</h1>
+      <div class="eyebrow"><span class="dot"></span> Agentic &amp; AI Nodes · Public Sale</div>
+      <h1>Power the agents.<br/>Mint a <em>FloraChain</em> AI node.</h1>
       <p class="lede">
-        Mint a soulbound FloraChain Core Node (FCORE) on Ethereum for exactly
+        FCORE is the license that powers <strong style="color:var(--text)">agentics and AI</strong> on FloraChain —
+        Manifest rails and completion-pool work — for exactly
         <strong style="color:var(--text)">399 USDC</strong>.
-        Your license stays in your wallet — not transferable on secondary markets —
-        and can be recognized for SEED once your tech team whitelists the contract.
+        It is not a copy of the chain and it is not a validator stake.
+        MetaFlora Connoisseur nodes are the peer replicas. Validators stake and sign.
+        This node stays soulbound in your wallet and can be recognized for SEED after whitelist.
       </p>
       <div class="stats">
-        <div class="stat"><b>$399</b><span>USDC per node</span></div>
-        <div class="stat"><b>Soulbound</b><span>No secondary sales</span></div>
-        <div class="stat"><b>2,500</b><span>Max supply</span></div>
+        <div class="stat"><b>Agentic</b><span>Manifest MCP rails</span></div>
+        <div class="stat"><b>AI work</b><span>Completion-pool worker</span></div>
+        <div class="stat"><b>$399</b><span>USDC · soulbound · 2,500 max</span></div>
       </div>
     </section>
 
     <section class="panel" id="mint">
       <div class="art-wrap">
-        <video id="nftArt" autoplay muted loop playsinline preload="auto" poster="" aria-label="FloraChain Core Node NFT"></video>
+        <video id="nftArt" autoplay muted loop playsinline preload="auto" poster="" aria-label="FloraChain Agentic AI Node"></video>
       </div>
       <div class="price-row">
         <div>
@@ -207,8 +208,8 @@
       <label for="qty">Quantity</label>
       <input id="qty" type="number" min="1" max="10" value="1" />
       <button class="primary" id="approveBtn" type="button" disabled>1. Approve USDC</button>
-      <button class="primary" id="mintBtn" type="button" disabled>2. Mint Core Node</button>
-      <div class="status" id="status">Connect a wallet on Ethereum to mint. Contract address is set after deploy.</div>
+      <button class="primary" id="mintBtn" type="button" disabled>2. Mint AI Node</button>
+      <div class="status" id="status">Connect a wallet on Ethereum to mint an agentic AI node. Contract address is set after deploy.</div>
       <p class="meta mono">
         Contract: <code id="addrLabel">not configured</code><br/>
         Network: <span id="netLabel">—</span>
@@ -217,10 +218,10 @@
   </main>
 
   <section class="strip">
-    <div class="item"><h3>Decentralized</h3><p>Distributed node network securing FloraChain participation.</p></div>
-    <div class="item"><h3>Compliant</h3><p>Built for real-world rails — identity-aware infrastructure.</p></div>
-    <div class="item"><h3>Sovereign</h3><p>Your node license stays with you. Soulbound by design.</p></div>
-    <div class="item"><h3>SEED-ready</h3><p>Pass the contract address to tech for SEED recognition.</p></div>
+    <div class="item"><h3>Agentic rails</h3><p>Manifest MCP: identity, quote, pay, attest, revoke. The customer brings the model.</p></div>
+    <div class="item"><h3>AI work</h3><p>When completion pools activate, this node is the worker that puts inference under consensus.</p></div>
+    <div class="item"><h3>Not a replica</h3><p>MetaFlora Connoisseur nodes are the peers — they hold a copy of flora-1. FCORE does not.</p></div>
+    <div class="item"><h3>Not a validator</h3><p>Validators stake and sign blocks. This license does not put you in the consensus set.</p></div>
   </section>
 
   <footer class="footer">
