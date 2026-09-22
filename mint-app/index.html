@@ -135,7 +135,7 @@
     .meta { margin-top: 0.85rem; text-align: center; color: var(--muted); font-size: 0.75rem; }
     .meta code { color: #cfcfcf; }
     .strip {
-      max-width: 1120px; margin: 0 auto; padding: 0 1.5rem 3rem;
+      max-width: 1120px; margin: 0 auto; padding: 0 1.5rem 2rem;
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;
     }
     @media (max-width: 900px) { .strip { grid-template-columns: 1fr 1fr; } }
@@ -145,6 +145,30 @@
     }
     .strip h3 { margin: 0 0 0.35rem; font-size: 0.95rem; color: var(--lime); font-weight: 600; }
     .strip p { margin: 0; color: var(--muted); font-size: 0.82rem; line-height: 1.45; }
+    .host {
+      max-width: 1120px; margin: 0 auto; padding: 0 1.5rem 3rem;
+    }
+    .host h2 {
+      margin: 0 0 0.5rem; font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em;
+    }
+    .host-note { color: var(--muted); font-size: 0.88rem; line-height: 1.5; margin: 0 0 1rem; max-width: 46rem; }
+    .host-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+    }
+    @media (max-width: 900px) { .host-grid { grid-template-columns: 1fr; } }
+    .host-card {
+      border: 1px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem;
+      background: var(--bg2);
+    }
+    .host-card h3 { margin: 0 0 0.2rem; font-size: 0.95rem; color: var(--lime); font-weight: 600; }
+    .host-card .when { color: var(--muted); font-size: 0.75rem; margin: 0 0 0.75rem; }
+    .host-card table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .host-card th, .host-card td {
+      text-align: left; padding: 0.35rem 0; border-bottom: 1px solid #171717;
+      vertical-align: top;
+    }
+    .host-card th { color: var(--muted); font-weight: 500; width: 34%; }
+    .host-card tr:last-child th, .host-card tr:last-child td { border-bottom: none; }
     .footer {
       border-top: 1px solid var(--border); padding: 1.5rem; color: var(--muted);
       display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
@@ -175,7 +199,7 @@
 
   <main class="hero">
     <section class="hero-copy">
-      <div class="eyebrow"><span class="dot"></span> Agentic &amp; AI Nodes · Public Sale</div>
+      <div class="eyebrow"><span class="dot"></span> Agentic & AI Nodes · Public Sale</div>
       <h1>Power the agents.<br/>Mint a <em>FloraChain</em> AI node.</h1>
       <p class="lede">
         FCORE is the license that powers <strong style="color:var(--text)">agentics and AI</strong> on FloraChain —
@@ -222,6 +246,42 @@
     <div class="item"><h3>AI work</h3><p>When completion pools activate, this node is the worker that puts inference under consensus.</p></div>
     <div class="item"><h3>Not a replica</h3><p>MetaFlora Connoisseur nodes are the peers — they hold a copy of flora-1. FCORE does not.</p></div>
     <div class="item"><h3>Not a validator</h3><p>Validators stake and sign blocks. This license does not put you in the consensus set.</p></div>
+  </section>
+
+  <section class="host" id="hosting">
+    <h2>Hosting</h2>
+    <p class="host-note">
+      Recommendations for the agentic/AI worker. Peer replicas and validators use different hardware.
+      Manifest and completion pools are dated on the network site; the license is what you mint today.
+      The small box is the Manifest door — not ping-to-earn. The larger box is opt-in pool work.
+    </p>
+    <div class="host-grid">
+      <article class="host-card">
+        <h3>Manifest host</h3>
+        <p class="when">Now → Month 6 · MCP door · no chain copy · no model</p>
+        <table>
+          <tr><th>CPU</th><td>2 vCPU</td></tr>
+          <tr><th>RAM</th><td>4 GB</td></tr>
+          <tr><th>Disk</th><td>40 GB SSD</td></tr>
+          <tr><th>GPU</th><td>None</td></tr>
+          <tr><th>Network</th><td>50 Mbps, public HTTPS</td></tr>
+          <tr><th>OS</th><td>Ubuntu 22.04 / 24.04</td></tr>
+          <tr><th>Chain disk</th><td>None — query the public gateway</td></tr>
+        </table>
+      </article>
+      <article class="host-card">
+        <h3>Completion-pool worker</h3>
+        <p class="when">When pools activate · opt-in AI work</p>
+        <table>
+          <tr><th>CPU</th><td>8 vCPU</td></tr>
+          <tr><th>RAM</th><td>32 GB</td></tr>
+          <tr><th>Disk</th><td>250 GB–1 TB NVMe</td></tr>
+          <tr><th>GPU</th><td>Optional — only if you host inference</td></tr>
+          <tr><th>Extra</th><td>Docker, flora-1 RPC, IPFS or object disk</td></tr>
+          <tr><th>Uptime</th><td>Always-on process — not Vercel serverless</td></tr>
+        </table>
+      </article>
+    </div>
   </section>
 
   <footer class="footer">
