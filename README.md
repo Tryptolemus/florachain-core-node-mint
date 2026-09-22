@@ -1,6 +1,16 @@
-# FloraChain Core Node (FCORE)
+# FloraChain Core Node (FCORE) — agentic & AI
 
-Public-sale Ethereum NFT collection for **FloraChain Core Node** — symbol `FCORE`.
+Public-sale Ethereum NFT for the **FloraChain Agentic AI Node** — symbol `FCORE`.
+
+This license is **only** for powering agentic execution and AI work on FloraChain. It is a different machine from the other two roles on the network:
+
+| Role | Who sells / runs it | What it does |
+|------|---------------------|--------------|
+| **Peer / Connoisseur** | MetaFlora Connoisseur (and Industry / Home Grow peers) | A **copy of the chain**. Replays flora-1, holds history, verifies state. |
+| **Validator** | Validator set (founding core today; set opening) | **Staking and block signing**. Consensus keys, slashing, governance weight. |
+| **FCORE (this repo)** | This mint | **Agentic + AI power** for FloraChain: Manifest MCP rails (`identity`, `quote`, `pay`, `attest`, `revoke`) and, when activated, AI completion-pool work. |
+
+FCORE does **not** make the holder a peer replica or a validator. The NFT is the license. Hosting the agent/AI worker is separate infrastructure (see below).
 
 - **Price:** exactly **399 USDC** per NFT (6 decimals → `399e6`)
 - **Supply:** max **2500**
@@ -12,6 +22,29 @@ Public-sale Ethereum NFT collection for **FloraChain Core Node** — symbol `FCO
 Owner: Greg / MetaFlora. After deploy, pass the contract address to the tech team for **SEED** holder recognition (see `TECH_TEAM_HANDOFF.md`).
 
 > This repo does **not** contain private keys. Do **not** commit `.env`. Deploy from your own machine.
+
+## What the holder is licensed to power
+
+When the agent layer ships (site: Month 6):
+
+- Connect a customer-owned agent (Claude, GPT, in-house) to **Manifest** as an MCP server
+- Exercise the five calls: `identity` · `quote` · `pay` · `attest` · `revoke`
+- After AI completion pools activate: run a **whitelisted relay / pool worker** that puts inference under on-chain consensus (deposit → multi-node result → slash divergence)
+
+Bring-your-own-model. FCORE is not a GPU NFT and not a chain replica.
+
+## Hosting this node (not a peer, not a validator)
+
+Do **not** size this like a Connoisseur archive box or a Cosmos validator+sentry.
+
+| Piece | Need |
+|-------|------|
+| Mint site | Static host (Vercel is fine) |
+| Manifest MCP worker | Always-on HTTPS process (not serverless-only). Agent credential. Low latency to flora-1 RPC. |
+| Completion-pool worker | Separate box once pools activate: 8+ CPU, 32+ GB RAM, disk for artifacts/IPFS. GPU only if *you* host inference. |
+| flora-1 access | Public gateway today: `https://testnet-gateway.metaflora.xyz` — this node queries/settles; it does not store the full chain. |
+
+Peer copies of the chain and validator keys live in other products / other machines.
 
 ## Package layout
 
@@ -137,7 +170,7 @@ cd mint-app && python3 -m http.server 8080
 
 ## Metadata
 
-- `metadata/sample.json` — OpenSea-compatible example
+- `metadata/sample.json` — OpenSea-compatible example (Agentic AI Node traits)
 - `metadata/fcore.svg` — simple professional node artwork
 
 Upload the folder (or generated per-token JSON) to IPFS, then set `BASE_URI` / `setBaseURI` to `ipfs://<CID>/` so `tokenURI(id)` → `ipfs://<CID>/<id>.json`.
