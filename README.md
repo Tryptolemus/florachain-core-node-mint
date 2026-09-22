@@ -35,16 +35,34 @@ Bring-your-own-model. FCORE is not a GPU NFT and not a chain replica.
 
 ## Hosting this node (not a peer, not a validator)
 
-Do **not** size this like a Connoisseur archive box or a Cosmos validator+sentry.
+Operator recommendations for the agentic/AI worker only. Peer replicas and validators need different hardware. Manifest and completion pools are dated on the network site; the license is what you mint today. No ping-to-earn — the small box does work when Manifest is live; the larger box does work when pools activate.
 
-| Piece | Need |
-|-------|------|
-| Mint site | Static host (Vercel is fine) |
-| Manifest MCP worker | Always-on HTTPS process (not serverless-only). Agent credential. Low latency to flora-1 RPC. |
-| Completion-pool worker | Separate box once pools activate: 8+ CPU, 32+ GB RAM, disk for artifacts/IPFS. GPU only if *you* host inference. |
-| flora-1 access | Public gateway today: `https://testnet-gateway.metaflora.xyz` — this node queries/settles; it does not store the full chain. |
+### Manifest host — now through Month 6
 
-Peer copies of the chain and validator keys live in other products / other machines.
+Always-on MCP door. Talks to flora-1. Does not store the chain. Does not run a model.
+
+| | Spec |
+|---|---|
+| CPU | 2 vCPU |
+| RAM | 4 GB |
+| Disk | 40 GB SSD |
+| GPU | None |
+| Network | 50 Mbps, public HTTPS |
+| OS | Ubuntu 22.04 / 24.04 |
+| Chain disk | None — query the public gateway |
+
+### Completion-pool worker — when pools activate, opt-in
+
+| | Spec |
+|---|---|
+| CPU | 8 vCPU |
+| RAM | 32 GB |
+| Disk | 250 GB–1 TB NVMe |
+| GPU | Optional — only if *you* host inference |
+| Extra | Docker, outbound to flora-1 RPC, IPFS or object disk for artifacts |
+| Uptime | Always-on process. Not Vercel serverless. |
+
+Mint site itself can stay on Vercel. Public gateway today: `https://testnet-gateway.metaflora.xyz`.
 
 ## Package layout
 
